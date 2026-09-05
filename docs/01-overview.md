@@ -1,56 +1,56 @@
-# Ikhtisar Sistem
+# System Overview
 
-## Tujuan
+## Purpose
 
-Sistem mengirim pembacaan suhu dan kelembapan DHT11 melalui radio LoRa SX1278/Ra-02 pada frekuensi 433 MHz. Penerima menampilkan payload dan kualitas sinyal pada serial monitor serta OLED I2C.
+The system transmits DHT11 temperature and humidity readings over SX1278/Ra-02 LoRa radio at 433 MHz. The receiver displays the incoming payload, RSSI, and SNR on the Serial Monitor and an I2C OLED screen.
 
 ```text
 DHT11 → ESP8266/ESP32 sender → SX1278 433 MHz ))) ((( SX1278 → ESP8266/ESP32 receiver → OLED
 ```
 
-## Kombinasi yang didukung
+## Supported Combinations
 
-Keempat contoh menggunakan format pesan dan pengaturan radio yang sama. Pengirim dan penerima dapat dipasangkan silang.
+All four example sketches use an identical message format and radio configuration. Transmitter and receiver boards can be cross-paired freely.
 
-| Pengirim | Penerima | Status |
+| Transmitter | Receiver | Status |
 |---|---|---|
-| ESP8266 sender | ESP8266 receiver | Didukung |
-| ESP8266 sender | ESP32 receiver | Didukung |
-| ESP32 sender | ESP8266 receiver | Didukung |
-| ESP32 sender | ESP32 receiver | Didukung |
+| ESP8266 sender | ESP8266 receiver | Supported |
+| ESP8266 sender | ESP32 receiver | Supported |
+| ESP32 sender | ESP8266 receiver | Supported |
+| ESP32 sender | ESP32 receiver | Supported |
 
-Kompatibilitas berlaku jika kedua modul benar-benar SX127x yang mendukung 433 MHz, antena sesuai frekuensi, serta frekuensi dan parameter radio identik.
+Interoperability is supported as long as both radio modules are genuine 433 MHz SX127x modules, proper 433 MHz antennas are attached, and identical radio parameters are configured on both sides.
 
-## Format payload
+## Payload Format
 
-Setiap pengirim mengirim teks ASCII berikut setiap 3 detik:
+Each transmitter sends the following ASCII text string every 3 seconds:
 
 ```text
 pkt=12;temp_c=26.4;humidity_pct=70.0
 ```
 
-| Field | Arti | Contoh |
+| Field | Description | Example |
 |---|---|---|
-| `pkt` | Nomor paket sejak perangkat dinyalakan | `12` |
-| `temp_c` | Suhu dalam derajat Celsius | `26.4` |
-| `humidity_pct` | Kelembapan relatif dalam persen | `70.0` |
+| `pkt` | Packet sequence number since boot | `12` |
+| `temp_c` | Temperature in degrees Celsius | `26.4` |
+| `humidity_pct` | Relative humidity in percent | `70.0` |
 
-Penerima saat ini menampilkan payload mentah. Ini membuat contoh tetap saling kompatibel dan memudahkan pemeriksaan data di serial monitor.
+The receiver currently displays the raw payload string. This maintains cross-compatibility across examples and simplifies inspecting transmitted data on the Serial Monitor.
 
-## Parameter radio
+## Radio Parameters
 
-| Parameter | Nilai contoh |
+| Parameter | Example Value |
 |---|---|
-| Chip radio | Semtech SX1278 / kompatibel (Ra-02) |
-| Frekuensi | `433E6` / 433 MHz |
-| Library radio | LoRa by Sandeep Mistry |
-| Mode penerima | Callback `LoRa.onReceive()` dan `LoRa.receive()` |
+| Radio Chip | Semtech SX1278 / compatible (Ra-02) |
+| Frequency | `433E6` / 433 MHz |
+| Radio Library | LoRa by Sandeep Mistry |
+| Receiver Mode | `LoRa.onReceive()` callback & `LoRa.receive()` |
 
-Library menggunakan nilai default LoRa untuk parameter yang tidak ditentukan program. Jika Anda mengubah spreading factor, bandwidth, coding rate, sync word, CRC, atau daya pancar pada salah satu sisi, buat perubahan yang sama pada sisi lain.
+The library uses default LoRa radio settings for any parameters not explicitly specified in the code. If you alter the spreading factor, bandwidth, coding rate, sync word, CRC, or output power on one device, ensure identical changes are made on the peer device.
 
-## Batasan contoh
+## Limitations
 
-- Ini adalah contoh point-to-point, bukan LoRaWAN.
-- Payload tidak dienkripsi dan tidak memiliki autentikasi; jangan kirim data rahasia tanpa menambahkan proteksi yang sesuai.
-- DHT11 memiliki akurasi dan rentang terbatas. Untuk kebutuhan lebih baik, pertimbangkan DHT22, SHT3x, atau sensor lain serta sesuaikan kode.
-- Tampilan OLED menyisakan ruang terbatas. Payload yang terlalu panjang dipotong pada 96 karakter oleh receiver untuk menjaga penggunaan memori.
+- This is a point-to-point LoRa implementation, not LoRaWAN.
+- Payloads are unencrypted and unauthenticated; do not transmit sensitive data without implementing proper security layers.
+- The DHT11 sensor has limited accuracy and range. For production or critical applications, consider upgrading to a DHT22, SHT3x, or similar sensor and adjusting the code accordingly.
+- OLED screen space is limited. Received payloads longer than 96 characters are truncated by the receiver to conserve memory.

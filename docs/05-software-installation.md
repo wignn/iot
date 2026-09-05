@@ -1,8 +1,8 @@
-# Instalasi Perangkat Lunak
+# Software Installation
 
 ## 1. Arduino IDE
 
-Gunakan Arduino IDE versi 2.x dari situs resmi Arduino. Setelah terpasang, buka **File > Preferences** dan tambahkan URL Board Manager berikut pada **Additional Boards Manager URLs**. Jika kolom sudah berisi URL lain, pisahkan dengan baris baru.
+Use Arduino IDE version 2.x from the official Arduino website. After installation, navigate to **File > Preferences** and add the following Board Manager URLs to **Additional Boards Manager URLs**. If other URLs are already present, separate them with a newline.
 
 ```text
 ESP8266:
@@ -12,64 +12,64 @@ ESP32:
 https://espressif.github.io/arduino-esp32/package_esp32_index.json
 ```
 
-Lalu buka **Tools > Board > Boards Manager**, cari paket berikut, dan instal:
+Then go to **Tools > Board > Boards Manager**, search for the following packages, and install them:
 
-| Board yang akan dipakai | Paket Board Manager | Pilihan board saat upload |
+| Target Board | Board Manager Package | Board Selection for Upload |
 |---|---|---|
 | NodeMCU ESP8266 | `esp8266` by ESP8266 Community | `NodeMCU 1.0 (ESP-12E Module)` |
 | ESP32 DevKit V1 | `esp32` by Espressif Systems | `ESP32 Dev Module` |
 
-Rujukan: [dokumentasi ESP8266 Arduino core](https://arduino-esp8266.readthedocs.io/en/latest/installing.html) dan [dokumentasi Arduino-ESP32](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html).
+References: [ESP8266 Arduino Core Documentation](https://arduino-esp8266.readthedocs.io/en/latest/installing.html) and [Arduino-ESP32 Documentation](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html).
 
-## 2. Library Arduino
+## 2. Arduino Libraries
 
-Buka **Tools > Manage Libraries...** dan instal library berikut dengan nama serta pembuat yang tepat.
+Navigate to **Tools > Manage Libraries...** and install the following libraries by searching for their exact names and authors:
 
-| Library | Pembuat | Dibutuhkan oleh |
+| Library | Author | Required By |
 |---|---|---|
-| `LoRa` | Sandeep Mistry | Semua contoh |
-| `DHT sensor library` | Adafruit | Semua sender |
-| `Adafruit Unified Sensor` | Adafruit | Dependency DHT sensor library |
-| `Adafruit SSD1306` | Adafruit | Semua receiver |
-| `Adafruit GFX Library` | Adafruit | Dependency OLED |
-| `Adafruit BusIO` | Adafruit | Dependency OLED |
+| `LoRa` | Sandeep Mistry | All examples |
+| `DHT sensor library` | Adafruit | All transmitter examples |
+| `Adafruit Unified Sensor` | Adafruit | Dependency of DHT sensor library |
+| `Adafruit SSD1306` | Adafruit | All receiver examples |
+| `Adafruit GFX Library` | Adafruit | Dependency of OLED library |
+| `Adafruit BusIO` | Adafruit | Dependency of OLED library |
 
-Library Manager biasanya akan memasang dependency otomatis, tetapi pastikan semua library di tabel muncul sebagai **Installed** sebelum kompilasi.
+The Library Manager typically prompts to install dependencies automatically, but verify that all libraries listed above show as **Installed** prior to compiling.
 
-Sumber library: [LoRa](https://github.com/sandeepmistry/arduino-LoRa), [DHT sensor library](https://github.com/adafruit/DHT-sensor-library), [Adafruit SSD1306](https://github.com/adafruit/Adafruit_SSD1306), dan [Adafruit GFX](https://github.com/adafruit/Adafruit-GFX-Library).
+Library source code: [LoRa](https://github.com/sandeepmistry/arduino-LoRa), [DHT sensor library](https://github.com/adafruit/DHT-sensor-library), [Adafruit SSD1306](https://github.com/adafruit/Adafruit_SSD1306), and [Adafruit GFX](https://github.com/adafruit/Adafruit-GFX-Library).
 
-## 3. Driver USB serial
+## 3. USB Serial Drivers
 
-Driver tergantung chip USB-to-UART pada board, bukan jenis firmware. Baca [panduan driver USB](drivers/README.md) untuk mengidentifikasi CH340/CH341, CP210x, atau FTDI dan memperoleh driver dari vendor resminya.
+The required driver depends on the USB-to-UART bridge chip integrated into your board, not the main microcontroller firmware. Refer to the [USB Serial Driver Guide](drivers/README.md) to identify CH340/CH341, CP210x, or FTDI chips and download official vendor drivers.
 
-Setelah driver dipasang dan board disambungkan dengan kabel **data**, pilih port yang muncul melalui **Tools > Port**. Pada Windows nama port biasanya `COM3`, `COM5`, atau serupa.
+Once the driver is installed and the board is connected using a **data** USB cable, select the populated port under **Tools > Port**. On Windows, port names typically appear as `COM3`, `COM5`, or similar.
 
-## 4. Konfigurasi upload
+## 4. Board & Upload Configuration Settings
 
 ### NodeMCU ESP8266
 
-| Opsi Arduino IDE | Nilai awal yang disarankan |
+| Arduino IDE Option | Recommended Initial Value |
 |---|---|
 | Board | `NodeMCU 1.0 (ESP-12E Module)` |
-| Upload Speed | `115200` bila upload belum stabil; `921600` bila stabil |
+| Upload Speed | `115200` (if uploads fail/unstable); `921600` (if stable) |
 | CPU Frequency | `80 MHz` |
-| Port | Port COM board yang terdeteksi |
+| Port | Detected COM port for the board |
 | Serial Monitor | `115200 baud` |
 
 ### ESP32 DevKit V1
 
-| Opsi Arduino IDE | Nilai awal yang disarankan |
+| Arduino IDE Option | Recommended Initial Value |
 |---|---|
 | Board | `ESP32 Dev Module` |
-| Upload Speed | `115200` bila upload belum stabil; gunakan nilai lebih tinggi hanya setelah stabil |
-| Port | Port COM board yang terdeteksi |
+| Upload Speed | `115200` (increase only after confirming stable uploads) |
+| Port | Detected COM port for the board |
 | Serial Monitor | `115200 baud` |
 
-Untuk ESP32 yang gagal masuk upload mode, tahan tombol **BOOT** saat status upload mulai `Connecting...`, kemudian lepas setelah transfer berjalan. Prosedur ini berbeda pada setiap board; lihat dokumentasi produsen board jika diperlukan.
+For ESP32 boards that fail to enter upload mode automatically, press and hold the **BOOT** button when the upload status shows `Connecting...`, then release it after firmware transfer begins. Boot procedures vary between board models; consult your manufacturer documentation if necessary.
 
-## 5. Membuka contoh
+## 5. Opening Example Projects
 
-Jangan membuka file `.ino` langsung dari lokasi lain. Dari Arduino IDE pilih **File > Open**, kemudian buka file di salah satu folder berikut:
+Do not open `.ino` files directly from random working directories. In Arduino IDE, select **File > Open**, then open the main `.ino` file in one of the following example directories:
 
 ```text
 examples/esp8266-sender-dht11/esp8266-sender-dht11.ino
@@ -78,4 +78,4 @@ examples/esp32-sender-dht11/esp32-sender-dht11.ino
 examples/esp32-receiver-oled/esp32-receiver-oled.ino
 ```
 
-Nama folder dan nama berkas sengaja dibuat identik agar sesuai dengan ketentuan sketch Arduino.
+Directory names and sketch filenames are intentionally identical to satisfy Arduino IDE sketch structure rules.

@@ -1,38 +1,45 @@
-# Troubleshooting
+# Troubleshooting Guide
 
-## Upload dan koneksi USB
+## USB Connection & Firmware Upload Issues
 
-| Gejala | Penyebab umum | Tindakan |
+| Symptom | Common Cause | Recommended Action |
 |---|---|---|
-| Tidak ada port COM | Kabel hanya untuk charging, driver belum terpasang, atau port USB bermasalah | Coba kabel data lain, pasang driver sesuai chip, lalu sambungkan kembali. Lihat [panduan driver](drivers/README.md). |
-| `Failed to connect` pada ESP8266 | GPIO0/D3 tertarik LOW, salah board/port, atau kabel tidak stabil | Lepas sementara perangkat di D3, cek board dan port, lalu upload ulang. |
-| `Connecting...` tidak lanjut pada ESP32 | Board tidak masuk mode bootloader | Tekan/tahan BOOT saat `Connecting...`; lihat panduan produsen board. |
-| Upload berhenti/putus | Daya USB atau kabel tidak stabil | Gunakan kabel pendek berkualitas dan turunkan upload speed ke 115200. |
+| COM port does not appear | Charge-only USB cable, driver not installed, or faulty USB port | Try a known good USB data cable, install official drivers for your chip, and reconnect. See [USB Driver Guide](drivers/README.md). |
+| `Failed to connect` on ESP8266 | GPIO0/D3 pulled LOW externally, wrong board/port selected, or unstable USB connection | Temporarily disconnect peripherals on D3, verify selected board and COM port, and retry uploading. |
+| `Connecting...` hangs on ESP32 | Board fails to enter bootloader mode automatically | Press and hold the BOOT button when `Connecting...` appears; consult board manufacturer instructions. |
+| Upload process freezes or fails mid-way | Unstable USB power or faulty cable | Use a high-quality short USB cable and lower the upload speed setting to 115200 baud in Arduino IDE. |
 
-## LoRa
+## LoRa Radio Communication Issues
 
-| Gejala | Penyebab umum | Tindakan |
+| Symptom | Common Cause | Recommended Action |
 |---|---|---|
-| `LoRa initialization failed` | VCC/GND salah, SPI/NSS/RST/DIO0 salah, regulator 3.3 V lemah, atau modul tidak sesuai | Matikan daya, periksa tabel wiring, ukur 3.3 V, lalu periksa kembali semua pin. |
-| Sender mengirim tetapi receiver tidak menerima | Frekuensi/radio parameter berbeda, antena belum dipasang, modul band berbeda, atau wiring receiver salah | Pastikan kedua sketch memakai `433E6`, modul dan antena 433 MHz, serta kabel sesuai tabel. |
-| Receiver hanya menerima kadang-kadang | Daya tidak stabil, jarak/halangan, antena buruk, koneksi longgar | Perbaiki daya dan ground, uji dekat terlebih dahulu, lalu periksa antena/konektor. |
-| RSSI/SNR buruk | Penempatan antena, halangan, interferensi, atau jarak | Ubah posisi/orientasi antena dan uji lokasi berbeda. |
+| `LoRa initialization failed` | Wiring error on SPI/NSS/RST/DIO0, power supply issue, weak 3.3 V regulator, or wrong radio chip | Power off the circuit, double-check connections against the wiring table, measure 3.3 V voltage rail, and verify radio pin numbers. |
+| Transmitter sends but receiver receives nothing | Mismatched frequency/parameters, missing antennas, mismatched hardware frequency bands, or receiver wiring error | Verify both sketches use `433E6`, confirm both modules and antennas are 433 MHz units, and check receiver wiring. |
+| Receiver receives packets intermittently | Unstable power, excessive range/interference, loose jumper wires, or poor antennas | Improve power supply stability and grounding, test devices at close range first, and verify antenna connections. |
+| Poor RSSI / SNR values | Antenna positioning, physical obstacles, RF interference, or distance | Reorient/reposition antennas and test communication in an open environment. |
 
-## DHT11
+## DHT11 Sensor Issues
 
-| Gejala | Penyebab umum | Tindakan |
+| Symptom | Common Cause | Recommended Action |
 |---|---|---|
-| `DHT11 read failed` | DATA/VCC/GND salah, pull-up tidak ada, pembacaan dilakukan terlalu cepat, atau sensor rusak | Periksa wiring DHT11; untuk sensor tanpa board pasang pull-up 4.7–10 kΩ DATA ke 3.3 V. Contoh membaca tiap 3 detik. |
-| Nilai suhu/kelembapan tidak wajar | Kondensasi, penempatan sensor, atau batas akurasi DHT11 | Keringkan/posisikan sensor dengan benar dan bandingkan dengan alat referensi. |
+| `DHT11 read failed` | DATA/VCC/GND miswired, missing pull-up resistor, reading sensor too frequently, or damaged sensor | Inspect DHT11 wiring. For bare 4-pin sensors without a PCB module, add a 4.7–10 kΩ pull-up resistor between DATA and 3.3 V. Examples sample every 3 seconds. |
+| Unrealistic temperature or humidity values | Condensation, poor placement near heat sources, or sensor accuracy limits | Ensure the sensor is clean and dry, position it properly, and cross-check against a reference thermometer/hygrometer. |
 
-## OLED
+## OLED Display Issues
 
-| Gejala | Penyebab umum | Tindakan |
+| Symptom | Common Cause | Recommended Action |
 |---|---|---|
-| `OLED not detected at I2C address 0x3C` | VCC/GND/SDA/SCL tertukar, alamat berbeda, atau modul bukan I2C SSD1306-compatible | Jangan menukar VCC/GND. Periksa label PCB dan jalankan I2C scanner; ubah `OLED_ADDRESS` ke `0x3D` hanya bila scanner menemukan `0x3D`. |
-| OLED menyala tetapi kosong | Driver/resolusi bukan target, kabel I2C salah, atau contrast/kompatibilitas modul berbeda | Pastikan OLED 4-pin I2C 128×64 dan SSD1306-compatible. Periksa kembali SDA/SCL. |
-| ESP8266 tidak boot ketika OLED terpasang | SDA memakai GPIO0/D3, pin bootstrap tertarik LOW | Periksa pull-up OLED dan kabel; lepas OLED untuk memastikan boot. Untuk desain produksi, gunakan pin I2C yang tidak memengaruhi bootstrap atau sesuaikan firmware. |
+| `OLED not detected at I2C address 0x3C` | VCC/GND/SDA/SCL swapped, different I2C address, or non-SSD1306 display controller | Do NOT swap VCC/GND pins blindly. Inspect PCB labels and run an I2C scanner sketch; update `OLED_ADDRESS` to `0x3D` only if detected by scanner. |
+| OLED turns on but displays nothing | Driver IC or resolution mismatch, wrong I2C wiring, or display contrast issue | Confirm your OLED module is a 4-pin I2C 128×64 SSD1306-compatible display. Double-check SDA and SCL pin wiring. |
+| ESP8266 fails to boot when OLED is connected | OLED SDA uses GPIO0/D3, pulling bootstrap pin LOW | Check OLED pull-up resistors and wiring; disconnect OLED to confirm boot behavior. For custom designs, use I2C pins that do not interfere with ESP8266 boot modes. |
 
-## Masih bermasalah
+## Reporting Unresolved Issues
 
-Catat board yang dipakai, nama sketch, teks error serial, foto label depan/belakang modul LoRa/OLED, dan hasil pemeriksaan tegangan. Informasi tersebut membedakan masalah driver, board, daya, koneksi, atau kompatibilitas modul.
+When asking for assistance, please document:
+1. Exact development board model used.
+2. Sketch filename uploaded to sender and receiver.
+3. Serial Monitor output text (including any error messages).
+4. Clear photos showing front and back silkscreen labels of the LoRa and OLED modules.
+5. Measured 3.3 V power rail voltage.
+
+This information helps distinguish between driver issues, board configuration bugs, power instability, wiring errors, or hardware incompatibility.

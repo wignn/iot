@@ -1,37 +1,37 @@
-# Panduan Driver USB Serial
+# USB Serial Driver Guide
 
-Folder ini menyimpan **panduan dan tautan resmi**, bukan salinan installer. Driver USB-to-UART adalah perangkat lunak vendor yang dapat berubah versi dan lisensinya. Mengunduh dari vendor resmi memastikan driver sesuai Windows dan lebih mutakhir.
+This directory contains **guidance and official links** for USB drivers, rather than bundled installer executables. USB-to-UART bridge drivers are vendor-maintained software subject to version updates and licensing terms. Downloading drivers directly from official manufacturer sources ensures compatibility and security.
 
-## Identifikasi chip USB pada board
+## Identifying the USB Chip on Your Board
 
-Periksa tulisan pada IC kecil di dekat konektor USB atau lihat nama perangkat di Windows Device Manager.
+Inspect the markings on the small IC located near the USB port on your development board, or check device details in Windows Device Manager.
 
-| Chip USB-to-UART | Nama yang mungkin muncul | Sumber resmi |
+| USB-to-UART Chip | Possible Device Name in Windows | Official Download Source |
 |---|---|---|
-| WCH CH340 / CH341 | `USB-SERIAL CH340`, `USB-Enhanced-SERIAL CH340` | [WCH CH341SER](https://www.wch-ic.com/downloads/CH341SER_EXE.html) |
-| Silicon Labs CP2102 / CP210x | `Silicon Labs CP210x USB to UART Bridge` | [Silicon Labs CP210x VCP Driver](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) |
+| WCH CH340 / CH341 | `USB-SERIAL CH340`, `USB-Enhanced-SERIAL CH340` | [WCH CH341SER Official Page](https://www.wch-ic.com/downloads/CH341SER_EXE.html) |
+| Silicon Labs CP2102 / CP210x | `Silicon Labs CP210x USB to UART Bridge` | [Silicon Labs CP210x VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers) |
 | FTDI FT232 | `USB Serial Port (COMx)` / `FT232R` | [FTDI VCP Drivers](https://ftdichip.com/drivers/vcp-drivers/) |
 
-NodeMCU/ESP32 bukan jaminan jenis chip: board yang sama dari penjual berbeda dapat menggunakan CH340, CP2102, atau chip lain. Pilih driver berdasarkan **chip di board**, bukan berdasarkan nama board saja.
+NodeMCU and ESP32 board names do not guarantee a specific USB chip family; identical development board designs from different manufacturers may use CH340, CP2102, or other bridge ICs. Select driver installers based on the **physical chip on the board**, not the micro-controller board name.
 
-## Instalasi di Windows
+## Windows Installation Steps
 
-1. Lepas board dari USB.
-2. Unduh driver yang cocok dari tautan resmi pada tabel.
-3. Jalankan installer vendor dengan hak yang diperlukan oleh Windows, atau ikuti instruksi resmi bila paket berbentuk ZIP/INF.
-4. Sambungkan board memakai kabel USB **data**.
-5. Buka **Device Manager > Ports (COM & LPT)**.
-6. Catat port yang muncul, misalnya `COM3` atau `COM5`.
-7. Pilih port itu di Arduino IDE melalui **Tools > Port**.
+1. Disconnect the development board from your computer's USB port.
+2. Download the appropriate driver from the official manufacturer links in the table above.
+3. Run the vendor installer with administrator privileges (or follow official setup instructions if provided as a ZIP/INF package).
+4. Connect the board using a **USB data cable**.
+5. Open **Device Manager > Ports (COM & LPT)**.
+6. Note the assigned port number (for example, `COM3` or `COM5`).
+7. In Arduino IDE, select that port under **Tools > Port**.
 
-## Jika port tidak muncul
+## Troubleshooting Unrecognized USB Ports
 
-1. Uji kabel USB lain; banyak kabel hanya mendukung pengisian daya.
-2. Uji port USB komputer lain dan hindari hub USB pasif saat diagnosis.
-3. Lihat Device Manager untuk perangkat dengan tanda seru kuning dan cocokkan hardware tersebut dengan chip pada tabel.
-4. Hapus perangkat/driver bermasalah sesuai prosedur Windows/vendor, lalu instal ulang driver resmi.
-5. Jangan menginstal driver dari situs unduhan tidak resmi atau paket driver acak.
+1. Test with a different USB cable; many cables sold with consumer devices are charge-only cables lacking data lines.
+2. Try connecting directly to a different USB port on the computer and avoid unpowered USB hubs during testing.
+3. Check Windows Device Manager for unrecognized devices marked with a yellow exclamation icon (`!`) and match hardware IDs against the table above.
+4. Remove misconfigured device drivers via Device Manager and reinstall official vendor drivers.
+5. Avoid downloading drivers from unauthorized third-party file hosting websites or unknown utility bundles.
 
-## Pemeliharaan
+## Maintenance Notice
 
-Tautan diperiksa saat dokumentasi ini dibuat, tetapi vendor dapat mengubah halaman, versi, dan ketentuan lisensinya. Gunakan halaman vendor sebagai sumber kebenaran dan baca lisensi sebelum distribusi dalam produk komersial.
+Links were verified when this documentation was created; however, semiconductor vendors may update URL structures, driver versions, and licensing agreements over time. Treat official vendor websites as the primary source of truth and review licensing requirements prior to commercial distribution.

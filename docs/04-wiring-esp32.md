@@ -1,53 +1,53 @@
-# Wiring ESP32 DevKit V1
+# ESP32 DevKit V1 Wiring Guide
 
-Dokumen ini memakai profil **ESP32 DevKit V1** dengan chip ESP32 klasik. Pin pada tabel adalah nomor GPIO yang umumnya tercetak di board. Pin tersebut adalah pilihan proyek agar jalur LoRa (SPI), OLED (I2C), dan DHT11 tidak bertabrakan; ini bukan satu-satunya pemetaan ESP32 yang valid.
+This document uses the **ESP32 DevKit V1** board profile with the classic ESP32 chip. Pin numbers listed in the tables refer to GPIO numbers printed on the board silkscreen. These pin selections are designed so that LoRa (SPI), OLED (I2C), and DHT11 signals do not collide; they are not the only valid pin mapping for ESP32.
 
-## Sender: ESP32 + DHT11 + SX1278/Ra-02
+## Transmitter: ESP32 + DHT11 + SX1278/Ra-02
 
-| Perangkat | Pin perangkat | ESP32 GPIO | Keterangan |
+| Device | Device Pin | ESP32 GPIO | Description |
 |---|---|---:|---|
-| DHT11 | VCC | 3V3 | Daya 3.3 V |
-| DHT11 | GND | GND | Ground bersama |
-| DHT11 | DATA / OUT | GPIO27 | Data sensor |
-| SX1278/Ra-02 | VCC | 3V3 | **3.3 V saja** |
-| SX1278/Ra-02 | GND | GND | Ground bersama |
-| SX1278/Ra-02 | NSS / NCS / CS | GPIO5 | Chip select |
-| SX1278/Ra-02 | RST | GPIO14 | Reset radio |
-| SX1278/Ra-02 | DIO0 | GPIO26 | Interrupt radio |
-| SX1278/Ra-02 | SCK | GPIO18 | SPI clock |
+| DHT11 | VCC | 3V3 | 3.3 V Power |
+| DHT11 | GND | GND | Common Ground |
+| DHT11 | DATA / OUT | GPIO27 | Sensor Data |
+| SX1278/Ra-02 | VCC | 3V3 | **3.3 V Only** |
+| SX1278/Ra-02 | GND | GND | Common Ground |
+| SX1278/Ra-02 | NSS / NCS / CS | GPIO5 | Chip Select |
+| SX1278/Ra-02 | RST | GPIO14 | Radio Reset |
+| SX1278/Ra-02 | DIO0 | GPIO26 | Radio Interrupt |
+| SX1278/Ra-02 | SCK | GPIO18 | SPI Clock |
 | SX1278/Ra-02 | MISO | GPIO19 | SPI MISO |
 | SX1278/Ra-02 | MOSI | GPIO23 | SPI MOSI |
-| SX1278/Ra-02 | DIO1–DIO5 | Tidak dihubungkan | Tidak dipakai contoh |
+| SX1278/Ra-02 | DIO1–DIO5 | Not Connected | Unused in examples |
 
-Buka sketch: [`../examples/esp32-sender-dht11/esp32-sender-dht11.ino`](../examples/esp32-sender-dht11/esp32-sender-dht11.ino)
+Open sketch: [`../examples/esp32-sender-dht11/esp32-sender-dht11.ino`](../examples/esp32-sender-dht11/esp32-sender-dht11.ino)
 
-## Receiver: ESP32 + SX1278/Ra-02 + OLED I2C
+## Receiver: ESP32 + SX1278/Ra-02 + I2C OLED
 
-| Perangkat | Pin perangkat | ESP32 GPIO | Keterangan |
+| Device | Device Pin | ESP32 GPIO | Description |
 |---|---|---:|---|
-| OLED I2C | VCC | 3V3 | Daya 3.3 V |
-| OLED I2C | GND | GND | Ground bersama |
-| OLED I2C | SCL / SCK | GPIO22 | I2C clock |
-| OLED I2C | SDA | GPIO21 | I2C data |
-| SX1278/Ra-02 | VCC | 3V3 | **3.3 V saja** |
-| SX1278/Ra-02 | GND | GND | Ground bersama |
-| SX1278/Ra-02 | NSS / NCS / CS | GPIO5 | Chip select |
-| SX1278/Ra-02 | RST | GPIO14 | Reset radio |
-| SX1278/Ra-02 | DIO0 | GPIO26 | Interrupt paket masuk |
-| SX1278/Ra-02 | SCK | GPIO18 | SPI clock |
+| I2C OLED | VCC | 3V3 | 3.3 V Power |
+| I2C OLED | GND | GND | Common Ground |
+| I2C OLED | SCL / SCK | GPIO22 | I2C Clock |
+| I2C OLED | SDA | GPIO21 | I2C Data |
+| SX1278/Ra-02 | VCC | 3V3 | **3.3 V Only** |
+| SX1278/Ra-02 | GND | GND | Common Ground |
+| SX1278/Ra-02 | NSS / NCS / CS | GPIO5 | Chip Select |
+| SX1278/Ra-02 | RST | GPIO14 | Radio Reset |
+| SX1278/Ra-02 | DIO0 | GPIO26 | Packet Received Interrupt |
+| SX1278/Ra-02 | SCK | GPIO18 | SPI Clock |
 | SX1278/Ra-02 | MISO | GPIO19 | SPI MISO |
 | SX1278/Ra-02 | MOSI | GPIO23 | SPI MOSI |
-| SX1278/Ra-02 | DIO1–DIO5 | Tidak dihubungkan | Tidak dipakai contoh |
+| SX1278/Ra-02 | DIO1–DIO5 | Not Connected | Unused in examples |
 
-Buka sketch: [`../examples/esp32-receiver-oled/esp32-receiver-oled.ino`](../examples/esp32-receiver-oled/esp32-receiver-oled.ino)
+Open sketch: [`../examples/esp32-receiver-oled/esp32-receiver-oled.ino`](../examples/esp32-receiver-oled/esp32-receiver-oled.ino)
 
-## Adaptasi untuk board ESP32 lain
+## Adapting for Other ESP32 Boards
 
-1. Pastikan board menggunakan chip ESP32 yang kompatibel dengan core Arduino ESP32 yang dipilih.
-2. Pilih GPIO yang benar-benar tersedia pada board dan tidak berbagi fungsi penting dengan flash, PSRAM, USB native, atau peripheral board.
-3. Ubah semua konstanta `LORA_*_PIN`, `OLED_*_PIN`, atau `DHT_PIN` pada sketch terkait secara konsisten.
-4. Pertahankan pemanggilan `SPI.begin(SCK, MISO, MOSI, NSS)` dan `Wire.begin(SDA, SCL)` agar pin kustom diterapkan.
-5. Periksa pin bootstrap pada varian board Anda sebelum memasang pull-up/pull-down eksternal.
-6. Gunakan 3.3 V untuk LoRa dan OLED, lalu pastikan seluruh GND terhubung.
+1. Verify that your board uses an ESP32 chip compatible with the selected Arduino ESP32 core package.
+2. Select available GPIO pins that do not conflict with onboard flash memory, PSRAM, native USB, or onboard peripherals.
+3. Update all `LORA_*_PIN`, `OLED_*_PIN`, or `DHT_PIN` constants in the corresponding sketch consistently.
+4. Keep explicit `SPI.begin(SCK, MISO, MOSI, NSS)` and `Wire.begin(SDA, SCL)` calls in code to apply custom pin mappings.
+5. Check strapping/boot pin requirements on your specific board variant before attaching external pull-up or pull-down resistors.
+6. Power LoRa and OLED with 3.3 V and verify that all ground (GND) pins are tied together.
 
-ESP32-S2, ESP32-S3, ESP32-C3, dan board dengan USB native dapat mempunyai nama board, pin, serta aturan upload berbeda. Gunakan dokumentasi resmi board tersebut sebelum menyalin pemetaan DevKit V1.
+ESP32-S2, ESP32-S3, ESP32-C3, and boards featuring native USB interfaces may have different pin designations, strapping rules, and upload procedures. Consult official board documentation before adapting the DevKit V1 layout.

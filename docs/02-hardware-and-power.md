@@ -1,50 +1,50 @@
-# Hardware, Daya, dan Keselamatan
+# Hardware, Power, and Safety
 
-## Bill of materials
+## Bill of Materials
 
-Untuk satu link telemetry lengkap diperlukan:
+A complete single-link telemetry system requires the following items:
 
-| Jumlah | Komponen | Catatan |
+| Quantity | Component | Notes |
 |---:|---|---|
-| 2 | ESP8266 NodeMCU **atau** ESP32 DevKit V1 | Satu sender dan satu receiver; boleh berbeda keluarga board |
-| 2 | LoRa SX1278 / Ra-02 433 MHz | Pastikan kedua modul menggunakan band frekuensi sama |
-| 2 | Antena 433 MHz | Pasang sebelum memberi daya pada LoRa |
-| 1 | DHT11 | Sensor untuk sender |
-| 1 | OLED 4-pin I2C, 128×64 | Target program: SSD1306-compatible, biasanya alamat `0x3C` |
-| Secukupnya | Kabel jumper dan breadboard | Gunakan jalur pendek untuk SPI serta daya |
-| 1 per board | Kabel USB data | USB charge-only tidak dapat digunakan untuk upload |
+| 2 | ESP8266 NodeMCU **or** ESP32 DevKit V1 | One sender and one receiver; board families can be mixed |
+| 2 | LoRa SX1278 / Ra-02 433 MHz | Ensure both modules operate on the same frequency band |
+| 2 | 433 MHz Antenna | Attach before powering on the LoRa modules |
+| 1 | DHT11 Sensor | Sensor for the transmitter node |
+| 1 | 4-pin I2C OLED (128×64) | Software target: SSD1306-compatible, typically address `0x3C` |
+| As needed | Jumper wires and breadboards | Keep wire runs short for SPI signals and power lines |
+| 1 per board | Micro-USB / USB-C data cable | Charge-only USB cables cannot be used for uploading code |
 
-## Tegangan dan arus
+## Voltage and Current Requirements
 
-| Perangkat | Tegangan yang digunakan proyek | Catatan |
+| Device | Project Voltage Level | Notes |
 |---|---|---|
-| ESP8266 / ESP32 board dev | Dari USB atau input board sesuai dokumentasi board | Board mengatur regulator internalnya |
-| SX1278 / Ra-02 | **3.3 V saja** | Jangan sambungkan VCC ke 5 V |
-| OLED I2C | 3.3 V | Memberi daya 3.3 V menjaga pull-up I2C tetap pada level aman untuk ESP |
-| DHT11 | 3.3 V | Aman untuk I/O 3.3 V |
+| ESP8266 / ESP32 Dev Board | Powered via USB or onboard pin | Onboard voltage regulator handles board power |
+| SX1278 / Ra-02 | **3.3 V only** | **Do NOT connect VCC to 5 V** |
+| I2C OLED | 3.3 V | Supplying 3.3 V keeps I2C pull-up logic levels safe for the ESP |
+| DHT11 | 3.3 V | Safe for 3.3 V I/O logic levels |
 
-Modul LoRa dapat membutuhkan arus puncak yang lebih besar daripada sensor biasa. Bila `LoRa.begin()` sering gagal atau perangkat reset, periksa kemampuan regulator 3.3 V dan sambungan GND. Gunakan regulator 3.3 V yang stabil dengan headroom arus yang memadai untuk board dan LoRa; jangan mengandalkan konverter USB-to-TTL kecil sebagai satu-satunya sumber untuk seluruh rangkaian.
+LoRa modules draw high peak currents during transmission. If `LoRa.begin()` fails frequently or the microcontroller resets unexpectedly, check the 3.3 V power regulator capacity and GND connection. Use a stable 3.3 V power source with sufficient current headroom for both the board and the LoRa transceiver; do not rely on small USB-to-TTL adapters as the sole power source.
 
-## Aturan pemasangan
+## Assembly and Handling Rules
 
-1. Matikan sumber daya sebelum mengubah kabel.
-2. Sambungkan **semua GND** menjadi satu ground bersama.
-3. Pasang antena yang sesuai band 433 MHz ke tiap SX1278 sebelum rangkaian diberi daya.
-4. Periksa label PCB, bukan urutan fisik pin header. Pada OLED GM009605, urutan `VCC` dan `GND` dapat berbeda antar varian.
-5. Pastikan LoRa yang digunakan adalah modul **433 MHz** bila firmware tetap memakai `433E6`. Jangan menggunakan `433E6` dengan modul/antena 868 atau 915 MHz.
-6. Hindari menyentuh atau mencabut kabel saat perangkat menyala.
+1. Disconnect all power sources before modifying wiring.
+2. Connect **all GND pins** together to establish a common ground reference.
+3. Attach a proper 433 MHz antenna to each SX1278 module before applying power.
+4. Always follow PCB pin labels rather than header pin order. On GM009605 OLED modules, `VCC` and `GND` layout may differ between board revisions.
+5. Verify that your LoRa module is a **433 MHz** variant if firmware uses `433E6`. Do not operate `433E6` firmware with 868 MHz or 915 MHz modules/antennas.
+6. Avoid touching or pulling wires while the device is powered on.
 
-## Catatan DHT11
+## DHT11 Wiring Notes
 
-Modul DHT11 tiga pin yang sudah memakai PCB umumnya memiliki resistor pull-up data. Jika memakai DHT11 sensor mentah tanpa PCB, pasang resistor pull-up **4.7 kΩ hingga 10 kΩ** dari pin DATA ke 3.3 V. Rujuk datasheet sensor untuk orientasi pin paket sensor yang dipakai.
+3-pin DHT11 module boards usually include an onboard data pull-up resistor. If using a raw 4-pin DHT11 sensor without a breakout board, install a **4.7 kΩ to 10 kΩ** pull-up resistor between the DATA line and 3.3 V. Refer to the sensor datasheet for pinout orientation.
 
-## Tentang OLED GM009605
+## GM009605 OLED Notes
 
-Nama GM009605 tidak cukup untuk menjamin driver elektronik dan alamat I2C pada setiap penjual. Contoh receiver dikonfigurasi untuk:
+The label GM009605 does not guarantee a specific IC driver or I2C address across all suppliers. The receiver sketch is configured for:
 
-- I2C empat pin: `VCC`, `GND`, `SCL`, `SDA`
-- 128×64 pixel
-- SSD1306-compatible
-- alamat I2C `0x3C`
+- 4-pin I2C interface: `VCC`, `GND`, `SCL`, `SDA`
+- 128×64 resolution
+- SSD1306 compatibility
+- I2C address `0x3C`
 
-Bila OLED tidak terdeteksi, jangan menukar VCC/GND. Periksa label pin, jalankan pemindai I2C, lalu ubah konstanta `OLED_ADDRESS` menjadi `0x3D` hanya jika hasil scanner menunjukkan alamat tersebut. Modul 7-pin/SPI tidak dapat dipasang menggunakan tabel I2C ini tanpa konfigurasi hardware dan firmware berbeda.
+If the OLED display is not detected, do not swap VCC and GND pins. Check the PCB pin markings, run an I2C scanner sketch, and change the `OLED_ADDRESS` constant to `0x3D` only if reported by the scanner. 7-pin SPI OLED modules cannot be wired using these I2C tables without modifying hardware connections and firmware driver settings.
