@@ -2,15 +2,15 @@
 
 This document uses the **NodeMCU 1.0 (ESP-12E Module)** board profile. Pin labels `D0` through `D8` correspond to silkscreen markings on the NodeMCU board, not raw GPIO numbers. Refer to the GPIO column if using another ESP8266 board model.
 
-> **GPIO0/D3 Boot Warning:** The examples use GPIO0 for the DHT11 data pin on the transmitter and for OLED SDA on the receiver. GPIO0 is a bootstrap pin: it must be pulled HIGH at reset to boot normally from flash memory. Do not press the FLASH button while booting, and ensure external circuitry does not pull this pin LOW during reset. If the board enters flash mode unexpectedly or fails to boot, temporarily disconnect D3 and inspect external pull-up/pull-down components.
+> **GPIO0/D3 Boot Warning:** The examples use GPIO0 for the DHT22 data pin on the transmitter and for OLED SDA on the receiver. GPIO0 is a bootstrap pin: it must be pulled HIGH at reset to boot normally from flash memory. Do not press the FLASH button while booting, and ensure external circuitry does not pull this pin LOW during reset. If the board enters flash mode unexpectedly or fails to boot, temporarily disconnect D3 and inspect external pull-up/pull-down components.
 
-## Transmitter: NodeMCU + DHT11 + SX1278/Ra-02
+## Transmitter: NodeMCU + DHT22 + SX1278/Ra-02
 
 | Device | Device Pin | NodeMCU Pin | ESP8266 GPIO | Description |
 |---|---|---|---:|---|
-| DHT11 | VCC | 3V3 | — | 3.3 V Power |
-| DHT11 | GND | GND | — | Common Ground |
-| DHT11 | DATA / OUT | D3 | GPIO0 | Sensor Data |
+| DHT22 | VCC | 3V3 | — | 3.3 V Power |
+| DHT22 | GND | GND | — | Common Ground |
+| DHT22 | DATA / OUT | D3 | GPIO0 | Sensor Data |
 | SX1278/Ra-02 | VCC | 3V3 | — | **3.3 V Only** |
 | SX1278/Ra-02 | GND | GND | — | Common Ground |
 | SX1278/Ra-02 | NSS / NCS / CS | D8 | GPIO15 | Chip Select |

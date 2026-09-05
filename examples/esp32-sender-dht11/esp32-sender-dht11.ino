@@ -6,7 +6,7 @@
 // LoRa SX1278 / Ra-02: 433 MHz
 
 constexpr uint8_t DHT_PIN = 27;
-constexpr uint8_t DHT_TYPE = DHT11;
+constexpr uint8_t DHT_TYPE = DHT22;
 constexpr uint8_t LORA_NSS_PIN = 5;
 constexpr uint8_t LORA_RST_PIN = 14;
 constexpr uint8_t LORA_DIO0_PIN = 26;
@@ -31,7 +31,7 @@ void setup() {
   dht.begin();
 
   Serial.println();
-  Serial.println("LoRa DHT11 Sender - ESP32");
+  Serial.println("LoRa DHT22 Sender - ESP32");
 
   SPI.begin(LORA_SCK_PIN, LORA_MISO_PIN, LORA_MOSI_PIN, LORA_NSS_PIN);
   LoRa.setPins(LORA_NSS_PIN, LORA_RST_PIN, LORA_DIO0_PIN);
@@ -47,7 +47,7 @@ void loop() {
   const float temperatureC = dht.readTemperature();
 
   if (isnan(humidity) || isnan(temperatureC)) {
-    Serial.println("DHT11 read failed. Check sensor wiring.");
+    Serial.println("DHT22 read failed. Check sensor wiring.");
     delay(SEND_INTERVAL_MS);
     return;
   }

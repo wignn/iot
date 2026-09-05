@@ -1,14 +1,14 @@
 # 433 MHz LoRa Telemetry System
 
-Arduino example project for transmitting DHT11 temperature and humidity data over LoRa SX1278/Ra-02, and receiving the data on a 128×64 I2C OLED display. This repository provides ready-to-open Arduino IDE examples for **ESP8266 NodeMCU** and **ESP32 DevKit V1**.
+Arduino example project for transmitting DHT22 temperature and humidity data over LoRa SX1278/Ra-02, and receiving the data on a 128×64 I2C OLED display. This repository provides ready-to-open Arduino IDE examples for **ESP8266 NodeMCU** and **ESP32 DevKit V1**.
 
 ## Supported Hardware
 
 | Role | Board | Sensor / Display | Ready-to-upload Sketch |
 |---|---|---|---|
-| Transmitter | NodeMCU 1.0 (ESP-12E) | DHT11 + SX1278/Ra-02 | [`examples/esp8266-sender-dht11/`](examples/esp8266-sender-dht11/) |
+| Transmitter | NodeMCU 1.0 (ESP-12E) | DHT22 + SX1278/Ra-02 | [`examples/esp8266-sender-dht11/`](examples/esp8266-sender-dht11/) |
 | Receiver | NodeMCU 1.0 (ESP-12E) | SX1278/Ra-02 + I2C OLED | [`examples/esp8266-receiver-oled/`](examples/esp8266-receiver-oled/) |
-| Transmitter | ESP32 DevKit V1 | DHT11 + SX1278/Ra-02 | [`examples/esp32-sender-dht11/`](examples/esp32-sender-dht11/) |
+| Transmitter | ESP32 DevKit V1 | DHT22 + SX1278/Ra-02 | [`examples/esp32-sender-dht11/`](examples/esp32-sender-dht11/) |
 | Receiver | ESP32 DevKit V1 | SX1278/Ra-02 + I2C OLED | [`examples/esp32-receiver-oled/`](examples/esp32-receiver-oled/) |
 
 The target OLED for this project is a **GM009605 4-pin I2C** module or any other **SSD1306-compatible** module with a **128×64** resolution using I2C address **`0x3C`**. Because the GM009605 marking is not a universally verified driver identifier, check the pin labels on the PCB and use an I2C scanner if the display is not detected.

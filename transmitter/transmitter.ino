@@ -8,7 +8,7 @@
 #define dio0 4            // pin D2 (GPIO4) pada NodeMCU ESP8266
 int counter = 0;
 
-DHT dht(DHTPIN, DHT11);
+DHT dht(DHTPIN, DHT22);
 void setup()
 {
   Serial.begin(115200);

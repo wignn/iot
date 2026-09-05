@@ -9,7 +9,7 @@ A complete single-link telemetry system requires the following items:
 | 2 | ESP8266 NodeMCU **or** ESP32 DevKit V1 | One sender and one receiver; board families can be mixed |
 | 2 | LoRa SX1278 / Ra-02 433 MHz | Ensure both modules operate on the same frequency band |
 | 2 | 433 MHz Antenna | Attach before powering on the LoRa modules |
-| 1 | DHT11 Sensor | Sensor for the transmitter node |
+| 1 | DHT22 Sensor | Sensor for the transmitter node |
 | 1 | 4-pin I2C OLED (128×64) | Software target: SSD1306-compatible, typically address `0x3C` |
 | As needed | Jumper wires and breadboards | Keep wire runs short for SPI signals and power lines |
 | 1 per board | Micro-USB / USB-C data cable | Charge-only USB cables cannot be used for uploading code |
@@ -21,7 +21,7 @@ A complete single-link telemetry system requires the following items:
 | ESP8266 / ESP32 Dev Board | Powered via USB or onboard pin | Onboard voltage regulator handles board power |
 | SX1278 / Ra-02 | **3.3 V only** | **Do NOT connect VCC to 5 V** |
 | I2C OLED | 3.3 V | Supplying 3.3 V keeps I2C pull-up logic levels safe for the ESP |
-| DHT11 | 3.3 V | Safe for 3.3 V I/O logic levels |
+| DHT22 | 3.3 V | Safe for 3.3 V I/O logic levels |
 
 LoRa modules draw high peak currents during transmission. If `LoRa.begin()` fails frequently or the microcontroller resets unexpectedly, check the 3.3 V power regulator capacity and GND connection. Use a stable 3.3 V power source with sufficient current headroom for both the board and the LoRa transceiver; do not rely on small USB-to-TTL adapters as the sole power source.
 
@@ -34,9 +34,9 @@ LoRa modules draw high peak currents during transmission. If `LoRa.begin()` fail
 5. Verify that your LoRa module is a **433 MHz** variant if firmware uses `433E6`. Do not operate `433E6` firmware with 868 MHz or 915 MHz modules/antennas.
 6. Avoid touching or pulling wires while the device is powered on.
 
-## DHT11 Wiring Notes
+## DHT22 Wiring Notes
 
-3-pin DHT11 module boards usually include an onboard data pull-up resistor. If using a raw 4-pin DHT11 sensor without a breakout board, install a **4.7 kΩ to 10 kΩ** pull-up resistor between the DATA line and 3.3 V. Refer to the sensor datasheet for pinout orientation.
+3-pin DHT22 module boards usually include an onboard data pull-up resistor. If using a raw 4-pin DHT22 sensor without a breakout board, install a **4.7 kΩ to 10 kΩ** pull-up resistor between the DATA line and 3.3 V. Refer to the sensor datasheet for pinout orientation.
 
 ## GM009605 OLED Notes
 

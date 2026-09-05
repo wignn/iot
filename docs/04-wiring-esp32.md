@@ -1,14 +1,14 @@
 # ESP32 DevKit V1 Wiring Guide
 
-This document uses the **ESP32 DevKit V1** board profile with the classic ESP32 chip. Pin numbers listed in the tables refer to GPIO numbers printed on the board silkscreen. These pin selections are designed so that LoRa (SPI), OLED (I2C), and DHT11 signals do not collide; they are not the only valid pin mapping for ESP32.
+This document uses the **ESP32 DevKit V1** board profile with the classic ESP32 chip. Pin numbers listed in the tables refer to GPIO numbers printed on the board silkscreen. These pin selections are designed so that LoRa (SPI), OLED (I2C), and DHT22 signals do not collide; they are not the only valid pin mapping for ESP32.
 
-## Transmitter: ESP32 + DHT11 + SX1278/Ra-02
+## Transmitter: ESP32 + DHT22 + SX1278/Ra-02
 
 | Device | Device Pin | ESP32 GPIO | Description |
 |---|---|---:|---|
-| DHT11 | VCC | 3V3 | 3.3 V Power |
-| DHT11 | GND | GND | Common Ground |
-| DHT11 | DATA / OUT | GPIO27 | Sensor Data |
+| DHT22 | VCC | 3V3 | 3.3 V Power |
+| DHT22 | GND | GND | Common Ground |
+| DHT22 | DATA / OUT | GPIO27 | Sensor Data |
 | SX1278/Ra-02 | VCC | 3V3 | **3.3 V Only** |
 | SX1278/Ra-02 | GND | GND | Common Ground |
 | SX1278/Ra-02 | NSS / NCS / CS | GPIO5 | Chip Select |

@@ -18,11 +18,11 @@
 | Receiver receives packets intermittently | Unstable power, excessive range/interference, loose jumper wires, or poor antennas | Improve power supply stability and grounding, test devices at close range first, and verify antenna connections. |
 | Poor RSSI / SNR values | Antenna positioning, physical obstacles, RF interference, or distance | Reorient/reposition antennas and test communication in an open environment. |
 
-## DHT11 Sensor Issues
+## DHT22 Sensor Issues
 
 | Symptom | Common Cause | Recommended Action |
 |---|---|---|
-| `DHT11 read failed` | DATA/VCC/GND miswired, missing pull-up resistor, reading sensor too frequently, or damaged sensor | Inspect DHT11 wiring. For bare 4-pin sensors without a PCB module, add a 4.7–10 kΩ pull-up resistor between DATA and 3.3 V. Examples sample every 3 seconds. |
+| `DHT22 read failed` | DATA/VCC/GND miswired, missing pull-up resistor, reading sensor too frequently, or damaged sensor | Inspect DHT22 wiring. For bare 4-pin sensors without a PCB module, add a 4.7–10 kΩ pull-up resistor between DATA and 3.3 V. Examples sample every 3 seconds. |
 | Unrealistic temperature or humidity values | Condensation, poor placement near heat sources, or sensor accuracy limits | Ensure the sensor is clean and dry, position it properly, and cross-check against a reference thermometer/hygrometer. |
 
 ## OLED Display Issues

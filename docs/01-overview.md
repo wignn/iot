@@ -2,10 +2,10 @@
 
 ## Purpose
 
-The system transmits DHT11 temperature and humidity readings over SX1278/Ra-02 LoRa radio at 433 MHz. The receiver displays the incoming payload, RSSI, and SNR on the Serial Monitor and an I2C OLED screen.
+The system transmits DHT22 temperature and humidity readings over SX1278/Ra-02 LoRa radio at 433 MHz. The receiver displays the incoming payload, RSSI, and SNR on the Serial Monitor and an I2C OLED screen.
 
 ```text
-DHT11 → ESP8266/ESP32 sender → SX1278 433 MHz ))) ((( SX1278 → ESP8266/ESP32 receiver → OLED
+DHT22 → ESP8266/ESP32 sender → SX1278 433 MHz ))) ((( SX1278 → ESP8266/ESP32 receiver → OLED
 ```
 
 ## Supported Combinations
@@ -52,5 +52,5 @@ The library uses default LoRa radio settings for any parameters not explicitly s
 
 - This is a point-to-point LoRa implementation, not LoRaWAN.
 - Payloads are unencrypted and unauthenticated; do not transmit sensitive data without implementing proper security layers.
-- The DHT11 sensor has limited accuracy and range. For production or critical applications, consider upgrading to a DHT22, SHT3x, or similar sensor and adjusting the code accordingly.
+- The DHT22 sensor provides higher accuracy and wider range than DHT11. For production or critical applications, consider upgrading to SHT3x or similar industrial sensors if needed.
 - OLED screen space is limited. Received payloads longer than 96 characters are truncated by the receiver to conserve memory.

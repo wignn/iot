@@ -26,7 +26,7 @@
 Sample serial output:
 
 ```text
-LoRa DHT11 Sender - ESP32
+LoRa DHT22 Sender - ESP32
 LoRa ready at 433 MHz.
 Sent: pkt=0;temp_c=26.4;humidity_pct=70.0
 Sent: pkt=1;temp_c=26.4;humidity_pct=70.0
