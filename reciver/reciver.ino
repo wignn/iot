@@ -38,7 +38,7 @@ void setup() {
   // Inisialisasi Bus I2C kustom pada GPIO0 & GPIO5
   Wire.begin(OLED_SDA, OLED_SCL);
 
-  // Inisialisasi Layar OLED
+  // init Layar OLED
   if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("OLED SSD1306 gagal diinisialisasi! Periksa koneksi/alamat I2C."));
   } else {
@@ -57,7 +57,7 @@ void setup() {
   // Setup pin modul LoRa
   LoRa.setPins(ss, rst, dio0);
 
-  // Mulai LoRa pada frekuensi 433 MHz
+  // Start LoRa pada frekuensi 433 MHz
   if (!LoRa.begin(433E6)) {
     Serial.println("Gagal memulai LoRa! Periksa kabel LoRa.");
     if (oledReady) {
@@ -72,7 +72,7 @@ void setup() {
 
   Serial.println("LoRa Berhasil Diinisialisasi!");
 
-  // Daftarkan callback saat paket diterima
+  // Reg callback saat paket diterima
   LoRa.onReceive(onReceive);
 
   // Aktifkan mode receive
@@ -144,7 +144,7 @@ void onReceive(int packetSize) {
   packetCount++;
   newPacket = true;
 
-  // Cetak juga ke Serial Monitor
+  // Print ke Serial Monitor
   Serial.print("Paket #");
   Serial.print(packetCount);
   Serial.print(" | Pesan: \"");
